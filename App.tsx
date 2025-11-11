@@ -176,7 +176,9 @@ const App: React.FC = () => {
             case AppPhase.RECOMMENDATIONS_READY:
                 return recommendations && <Recommendations response={recommendations} images={recommendationImages} onSelect={handleSelectDestination} onRestart={handleRestart} isLoading={isLoading} {...props} />;
             case AppPhase.PLANNING:
-                return <LoadingIndicator text={t('loadingItinerary', {destination: selectedDestination})} />;
+                const loadingSteps: string[] = translations[language].loadingItinerarySteps || translations.en.loadingItinerarySteps;
+                const processedSteps = loadingSteps.map(step => step.replace('{destination}', selectedDestination));
+                return <LoadingIndicator text={processedSteps} />;
             case AppPhase.ITINERARY_READY:
                 return itinerary && preferences && <Itinerary itinerary={itinerary} preferences={preferences} onBack={handleBackToRecommendations} onRestart={handleRestart} {...props} />;
             case AppPhase.ERROR:
@@ -187,14 +189,14 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen text-slate-700">
+        <div className="min-h-screen">
             <Header t={t} language={language} setLanguage={setLanguage} />
             <main>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
                     {renderContent()}
                 </div>
             </main>
-             <footer className="text-center py-6 text-sm text-slate-500">
+             <footer className="text-center py-8 text-sm text-[var(--brand-text-subtle)]">
                 <p>{t('poweredBy')}</p>
             </footer>
         </div>

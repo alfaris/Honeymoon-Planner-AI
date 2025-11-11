@@ -21,22 +21,22 @@ const PreTripChecklist: React.FC<PreTripChecklistProps> = ({ t, items }) => {
     };
     
     return (
-        <div className="p-6 bg-white rounded-xl shadow-xl border border-slate-200/80">
-            <h3 className="text-xl font-serif font-bold text-slate-800 mb-4 flex items-center">
+        <div className="card-style p-6">
+            <h3 className="text-xl font-serif font-bold text-[var(--brand-text-heading)] mb-4 flex items-center">
                 <ChecklistIcon />
                 {t('preTripChecklist')}
             </h3>
             <ul className="space-y-3">
                 {items.map((item, index) => (
                     <li key={index}>
-                       <label className="flex items-center cursor-pointer group">
+                       <label className="flex items-start cursor-pointer group">
                             <input 
                                 type="checkbox" 
                                 checked={!!checkedState[index]}
                                 onChange={() => handleCheckboxChange(index)}
-                                className="w-5 h-5 border-2 border-slate-300 rounded-sm me-3 text-rose-500 focus:ring-rose-500/50 accent-rose-500" 
+                                className="w-5 h-5 border-2 mt-0.5 border-slate-300 rounded me-3 text-[var(--brand-rose-500)] focus:ring-[var(--brand-rose-500)]/50 accent-[var(--brand-rose-500)] shrink-0" 
                             />
-                            <span className={`text-slate-700 text-sm group-hover:text-rose-600 transition-all ${checkedState[index] ? 'line-through text-slate-400' : ''}`}>
+                            <span className={`text-[var(--brand-text-main)] text-sm group-hover:text-[var(--brand-rose-600)] transition-all ${checkedState[index] ? 'line-through text-[var(--brand-text-subtle)]' : ''}`}>
                                 {item}
                             </span>
                        </label>

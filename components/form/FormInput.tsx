@@ -16,9 +16,12 @@ interface FormInputProps {
 
 const FormInput: React.FC<FormInputProps> = ({ 
     label, name, value, onChange, type = "text", placeholder, fullWidth, required, isTextArea, rows, min
-}) => (
+}) => {
+    const commonClasses = "appearance-none w-full px-3 py-2.5 border border-[var(--brand-border-soft)] rounded-lg shadow-sm focus:ring-2 focus:ring-[var(--brand-rose-300)] focus:border-[var(--brand-rose-500)] transition";
+
+    return (
     <div className={fullWidth ? "md:col-span-2" : isTextArea ? "md:col-span-1" : ""}>
-        <label htmlFor={name} className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor={name} className="block text-sm font-medium text-[var(--brand-text-main)] mb-1.5">
             {label}
             {required && <span className="text-red-500">*</span>}
         </label>
@@ -30,7 +33,7 @@ const FormInput: React.FC<FormInputProps> = ({
                 onChange={onChange} 
                 placeholder={placeholder}
                 rows={rows || 3} 
-                className="appearance-none w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500"
+                className={commonClasses}
             ></textarea>
         ) : (
             <input 
@@ -42,10 +45,10 @@ const FormInput: React.FC<FormInputProps> = ({
                 placeholder={placeholder} 
                 required={required} 
                 min={min}
-                className="appearance-none w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500" 
+                className={commonClasses}
             />
         )}
     </div>
-);
+)};
 
 export default memo(FormInput);

@@ -8,42 +8,42 @@ import SparkleIcon from '../icons/SparkleIcon';
 
 const CostAndTimeline: React.FC<{ breakdown: DetailedCostBreakdown; timeline: VisualTimelineEntry[]; t: (key: string, replacements?: { [key: string]: string }) => string }> = ({ breakdown, timeline, t }) => {
     return (
-        <div className="p-6 bg-white rounded-xl shadow-xl border border-slate-200/80">
+        <div className="card-style p-6">
             {/* Timeline */}
-            <h3 className="text-xl font-serif font-bold text-slate-800 mb-4 flex items-center">
+            <h3 className="text-xl font-serif font-bold text-[var(--brand-text-heading)] mb-4 flex items-center">
                 <CalendarIcon className="h-6 w-6 inline-block me-2" />
                 {t('visualTimeline')}
             </h3>
             <div className="mb-6 space-y-2 text-sm">
                 {timeline.map(tItem => (
                     <div key={tItem.day} className="flex items-center justify-between">
-                        <span className="text-slate-600 flex items-center gap-1.5">
+                        <span className="text-[var(--brand-text-subtle)] flex items-center gap-1.5">
                             {t('day', {day: tItem.day.toString()})} &mdash; {tItem.title} 
-                            {tItem.isRomantic && <HeartIcon className="h-4 w-4 inline-block text-rose-500" />} 
+                            {tItem.isRomantic && <HeartIcon className="h-4 w-4 inline-block text-[var(--brand-rose-500)]" />} 
                             {tItem.isSpecial && <SparkleIcon />}
                         </span>
-                        <span className="font-semibold text-slate-800">{tItem.cost}</span>
+                        <span className="font-semibold text-[var(--brand-text-main)]">{tItem.cost}</span>
                     </div>
                 ))}
             </div>
             
             {/* Cost Breakdown */}
-            <h3 className="text-xl font-serif font-bold text-slate-800 mb-4 border-t border-slate-200 pt-4 flex items-center">
+            <h3 className="text-xl font-serif font-bold text-[var(--brand-text-heading)] mb-4 border-t border-[var(--brand-border-soft)] pt-6 flex items-center">
                  <MoneyIcon className="h-6 w-6 inline-block me-2" />
                  {t('detailedCost')}
             </h3>
-            <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-slate-600">{t('flights')}</span> <span className="font-semibold">{breakdown.flights}</span></div>
-                <div className="flex justify-between"><span className="text-slate-600">{t('accommodation')}</span> <span className="font-semibold">{breakdown.accommodation}</span></div>
-                <div className="flex justify-between"><span className="text-slate-600">{t('activitiesSubtotal')}</span> <span className="font-semibold">{breakdown.activitiesSubtotal}</span></div>
-                <div className="flex justify-between"><span className="text-slate-600">{t('dining')}</span> <span className="font-semibold">{breakdown.dining}</span></div>
-                <div className="flex justify-between"><span className="text-slate-600">{t('localTransport')}</span> <span className="font-semibold">{breakdown.localTransport}</span></div>
-                <div className="flex justify-between border-t border-slate-200 mt-2 pt-2"><span className="text-slate-600">{t('contingency')}</span> <span className="font-semibold">{breakdown.contingency}</span></div>
-                <div className="flex justify-between text-base font-bold text-slate-900 border-t-2 border-slate-300 mt-2 pt-2">
-                    <span>{t('totalEstCost')}</span> 
-                    <span>{breakdown.totalCost}</span>
+            <dl className="space-y-2 text-sm">
+                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('flights')}</dt> <dd className="font-semibold">{breakdown.flights}</dd></div>
+                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('accommodation')}</dt> <dd className="font-semibold">{breakdown.accommodation}</dd></div>
+                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('activitiesSubtotal')}</dt> <dd className="font-semibold">{breakdown.activitiesSubtotal}</dd></div>
+                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('dining')}</dt> <dd className="font-semibold">{breakdown.dining}</dd></div>
+                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('localTransport')}</dt> <dd className="font-semibold">{breakdown.localTransport}</dd></div>
+                <div className="flex justify-between border-t border-[var(--brand-border-soft)] mt-2 pt-2"><dt className="text-[var(--brand-text-subtle)]">{t('contingency')}</dt> <dd className="font-semibold">{breakdown.contingency}</dd></div>
+                <div className="flex justify-between text-base font-bold text-[var(--brand-text-heading)] border-t-2 border-slate-300 mt-2 pt-2">
+                    <dt>{t('totalEstCost')}</dt> 
+                    <dd>{breakdown.totalCost}</dd>
                 </div>
-            </div>
+            </dl>
         </div>
     );
 };
