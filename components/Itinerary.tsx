@@ -8,6 +8,7 @@ import PreTripChecklist from './itinerary/PreTripChecklist';
 import HeartIcon from './icons/HeartIcon';
 import ShareItinerary from './itinerary/ShareItinerary';
 import DownloadIcon from './icons/DownloadIcon';
+import Feedback from './itinerary/Feedback';
 
 interface ItineraryProps {
     itinerary: DetailedItinerary;
@@ -140,6 +141,8 @@ const Itinerary: React.FC<ItineraryProps> = ({ itinerary, preferences, onBack, o
                             <h3 className="text-xl font-serif font-bold text-[var(--brand-text-heading)] mb-4">{t('balanceHarmony')}</h3>
                             <p className="text-sm text-[var(--brand-text-subtle)]">{itinerary.partnerPreferenceBalance}</p>
                         </div>
+                        
+                        <Feedback t={t} />
 
                     </div>
                 </div>

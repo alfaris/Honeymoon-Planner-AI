@@ -182,6 +182,13 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
         errorTitle: "Oops! Something went wrong.",
         tryAgain: "Try Again",
 
+        // Feedback
+        feedbackTitle: "How was this plan?",
+        feedbackThanks: "Thanks for your feedback!",
+        feedbackUnhappy: "Unhappy",
+        feedbackNeutral: "It's okay",
+        feedbackHappy: "Happy",
+
         // Constants Data
         honeymoonTypes: [
             { id: 'abroad', name: 'Abroad', icon: GlobeAmericasIcon },
@@ -387,6 +394,13 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
         // Error
         errorTitle: "عفوًا! حدث خطأ ما.",
         tryAgain: "حاول مرة أخرى",
+
+        // Feedback
+        feedbackTitle: "ما رأيك في هذه الخطة؟",
+        feedbackThanks: "شكراً لملاحظاتك!",
+        feedbackUnhappy: "غير راضٍ",
+        feedbackNeutral: "لا بأس بها",
+        feedbackHappy: "راضٍ",
 
         // Constants Data
         honeymoonTypes: [
