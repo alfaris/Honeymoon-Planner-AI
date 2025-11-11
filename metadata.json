@@ -1,0 +1,7 @@
+{
+  "name": "Honeymoon Planner AI",
+  "description": "An AI-powered assistant to help newly married couples create personalized, romantic, and practical honeymoon itineraries based on their budget, travel dates, preferences, and style. Supports English and Arabic.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
