@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ChecklistIcon from '../icons/ChecklistIcon';
+import { ClipboardCheck } from 'lucide-react';
 
 interface PreTripChecklistProps {
     t: (key: string) => string;
@@ -25,7 +25,7 @@ const PreTripChecklist: React.FC<PreTripChecklistProps> = ({ t, items }) => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-rose-50 rounded-full -mr-16 -mt-16 opacity-50 blur-2xl -z-10"></div>
             <h3 className="text-2xl font-serif font-black text-brand-text-heading mb-6 tracking-tight flex items-center gap-3">
                 <div className="p-2 bg-brand-rose-50 rounded-lg">
-                    <ChecklistIcon className="h-5 w-5 text-brand-rose-500" />
+                    <ClipboardCheck className="h-5 w-5 text-brand-rose-500" />
                 </div>
                 {t('preTripChecklist')}
             </h3>

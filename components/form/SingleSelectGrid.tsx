@@ -9,7 +9,7 @@ interface SingleSelectGridProps {
 
 const SingleSelectGrid: React.FC<SingleSelectGridProps> = ({ label, options, selectedValue, onSelect }) => (
     <div className="md:col-span-2">
-        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-brand-text-subtle/80 mb-6 border-l-2 border-brand-rose-400 pl-3">{label}</label>
+        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-brand-text-subtle/80 mb-6 border-s-2 border-brand-rose-400 ps-3">{label}</label>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {options.map(option => {
                 const isSelected = selectedValue === option.name;
@@ -31,7 +31,7 @@ const SingleSelectGrid: React.FC<SingleSelectGridProps> = ({ label, options, sel
                         {Icon && <Icon className={`h-8 w-8 transition-all duration-500 ${isSelected ? 'text-brand-rose-600 scale-110' : 'text-brand-rose-400 group-hover:text-brand-rose-600'}`} />}
                         <span className={`font-bold tracking-tight uppercase text-[10px] ${isSelected ? 'text-brand-rose-800' : 'text-brand-text-heading'}`}>{option.name}</span>
                         {isSelected && (
-                            <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-brand-rose-400 rounded-full"></div>
+                            <div className="absolute top-2 end-2 w-1.5 h-1.5 bg-brand-rose-400 rounded-full"></div>
                         )}
                     </button>
                 );

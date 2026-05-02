@@ -2,13 +2,15 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { DetailedItinerary, HoneymoonPreferences } from '../../types';
 import LZString from '../../utils/lz-string';
 
-import ShareIcon from '../icons/ShareIcon';
-import CopyIcon from '../icons/CopyIcon';
-import TwitterIcon from '../icons/TwitterIcon';
-import FacebookIcon from '../icons/FacebookIcon';
-import WhatsappIcon from '../icons/WhatsappIcon';
-import EmailIcon from '../icons/EmailIcon';
-import XIcon from '../icons/XIcon';
+import { 
+    Share2, 
+    Copy, 
+    Facebook, 
+    Twitter, 
+    MessageCircle, 
+    Mail, 
+    X 
+} from 'lucide-react';
 
 interface ShareItineraryProps {
     itinerary: DetailedItinerary;
@@ -39,10 +41,10 @@ const ShareItinerary: React.FC<ShareItineraryProps> = ({ itinerary, preferences,
     const shareText = `Check out our dream honeymoon itinerary to ${itinerary.destination}! Planned with Honeymoon Planner AI.`;
 
     const socialPlatforms = [
-        { name: 'Twitter', icon: TwitterIcon, href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareLink)}&text=${encodeURIComponent(shareText)}` },
-        { name: 'Facebook', icon: FacebookIcon, href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}` },
-        { name: 'WhatsApp', icon: WhatsappIcon, href: `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareLink)}` },
-        { name: 'Email', icon: EmailIcon, href: `mailto:?subject=${encodeURIComponent(`Our Honeymoon Plan: ${itinerary.destination}`)}&body=${encodeURIComponent(shareText + '\n\n' + shareLink)}` },
+        { name: 'Twitter', icon: Twitter, href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareLink)}&text=${encodeURIComponent(shareText)}` },
+        { name: 'Facebook', icon: Facebook, href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}` },
+        { name: 'WhatsApp', icon: MessageCircle, href: `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareLink)}` },
+        { name: 'Email', icon: Mail, href: `mailto:?subject=${encodeURIComponent(`Our Honeymoon Plan: ${itinerary.destination}`)}&body=${encodeURIComponent(shareText + '\n\n' + shareLink)}` },
     ];
 
     return (
@@ -54,7 +56,7 @@ const ShareItinerary: React.FC<ShareItineraryProps> = ({ itinerary, preferences,
                 aria-label={t('shareItinerary')}
                 className="fixed bottom-6 end-6 bg-gradient-to-br from-[var(--brand-rose-500)] to-[var(--brand-rose-600)] text-white w-16 h-16 rounded-full shadow-lg hover:shadow-2xl hover:scale-110 focus:outline-none focus:ring-4 focus:ring-[var(--brand-rose-300)] flex items-center justify-center transition-all transform z-20"
             >
-                <ShareIcon className="w-8 h-8"/>
+                <Share2 className="w-8 h-8"/>
             </button>
 
             {isModalOpen && (
@@ -74,7 +76,7 @@ const ShareItinerary: React.FC<ShareItineraryProps> = ({ itinerary, preferences,
                             className="absolute top-4 end-4 text-slate-400 hover:text-slate-600 transition-colors"
                             aria-label="Close"
                         >
-                            <XIcon className="w-6 h-6"/>
+                            <X className="w-6 h-6"/>
                         </button>
 
                         <h3 id="share-modal-title" className="text-2xl font-serif font-bold text-[var(--brand-text-heading)] text-center">{t('shareTitle')}</h3>

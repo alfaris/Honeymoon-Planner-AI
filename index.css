@@ -6,39 +6,45 @@
   --font-arabic-sans: "Alexandria", sans-serif;
   --font-arabic-serif: "Amiri", serif;
 
-  /* Coastal Luxury Palette - Mapping Rose to Nautical/Sand for instant redesign */
-  --color-brand-rose-50: #fcfaf7; /* Ivory Cream */
-  --color-brand-rose-100: #f7f1e6; /* Soft Sand */
-  --color-brand-rose-200: #e6d5b8; /* Warm Sand */
-  --color-brand-rose-300: #d4b98a; /* Golden Sand */
-  --color-brand-rose-400: #c5a059; /* Heritage Gold */
-  --color-brand-rose-500: #334155; /* Slate Blue */
-  --color-brand-rose-600: #1e293b; /* Nautical Navy */
-  --color-brand-rose-700: #0f172a; /* Midnight Navy */
-  --color-brand-rose-800: #020617; /* Rich Black */
+  /* Coastal Luxury Palette - High Contrast & Nuance */
+  --color-brand-rose-50: #fdfcfb; /* Alabaster */
+  --color-brand-rose-100: #f8f4ed; /* Champagne Sand */
+  --color-brand-rose-200: #e8dbc4; /* Aged Parchment */
+  --color-brand-rose-300: #ccab7a; /* Muted Gold */
+  --color-brand-rose-400: #a1824a; /* Bronze Leaf */
+  --color-brand-rose-500: #334e68; /* Slate Horizon */
+  --color-brand-rose-600: #243b53; /* Deep Nautical */
+  --color-brand-rose-700: #102a43; /* Midnight Ocean */
+  --color-brand-rose-800: #051624; /* Abyss */
   --color-brand-rose-900: #000000;
 
-  --color-brand-text-main: #1e293b;
+  --color-brand-text-main: #334155;
   --color-brand-text-heading: #0f172a;
-  --color-brand-text-subtle: #475569;
-  
-  --color-brand-border-soft: #e2e8f0;
-  --color-brand-surface: #ffffff;
-  --color-brand-surface-subtle: #f8fafc;
+  --color-brand-text-subtle: #64748b;
 
-  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-card-hover: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08);
+  --color-brand-surface: #ffffff;
+  --color-brand-surface-subtle: #fcfaf7;
+
+  --shadow-card: 0 4px 20px -1px rgb(15 23 42 / 0.03), 0 2px 10px -2px rgb(15 23 42 / 0.03);
+  --shadow-card-hover: 0 30px 60px -12px rgb(15 23 42 / 0.08), 0 18px 36px -18px rgb(15 23 42 / 0.08);
+
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 @layer base {
   body {
     @apply font-sans text-brand-text-main bg-brand-rose-50 antialiased;
-    /* Subtle Nautical/Chart Background Pattern */
+    /* More sophisticated linen pattern */
     background-image: 
-      radial-gradient(#d4b98a 0.5px, transparent 0.5px),
-      radial-gradient(#d4b98a 0.5px, #fcfaf7 0.5px);
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 20px;
+      linear-gradient(rgba(204, 171, 122, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(204, 171, 122, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
     background-attachment: fixed;
   }
 
@@ -49,11 +55,24 @@
 
   html[dir="rtl"] body {
     font-family: var(--font-arabic-sans);
+    line-height: 1.8;
   }
   
   html[dir="rtl"] .font-serif {
     font-family: var(--font-arabic-serif);
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-rose-50;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-rose-200 rounded-full hover:bg-brand-rose-300 transition-colors;
   }
 }
 

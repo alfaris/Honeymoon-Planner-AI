@@ -1,8 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Accommodation, AccommodationOption } from '../../types';
-import AccommodationIcon from '../icons/AccommodationIcon';
-import ExternalLinkIcon from '../icons/ExternalLinkIcon';
+import { ExternalLink } from 'lucide-react';
 
 interface AccommodationCardProps {
     levelKey: 'budget' | 'midRange' | 'luxury';
@@ -26,21 +25,21 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ levelKey, level, 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="bg-white p-10 rounded-sm shadow-card border border-brand-rose-100 flex flex-col group hover:border-brand-rose-300 transition-all duration-500 h-full"
+            className="bg-white p-8 rounded-sm shadow-card border border-brand-rose-100 flex flex-col group hover:border-brand-rose-300 transition-all duration-500 h-full"
         >
             <div className="flex-grow">
-                <div className={`inline-block px-3 py-1 rounded-sm text-[9px] font-black uppercase tracking-[0.2em] mb-6 border ${colorClasses}`}>
+                <div className={`inline-block px-3 py-1 rounded-sm text-[9px] font-black uppercase tracking-[0.2em] mb-4 border ${colorClasses}`}>
                     {level}
                 </div>
-                <p className="font-serif font-black text-3xl text-brand-text-heading mb-3 tracking-tighter italic leading-none">{option.hotelName}</p>
-                <div className="flex items-center gap-2 mb-6 text-sm">
+                <p className="font-serif font-black text-2xl text-brand-text-heading mb-2 tracking-tighter italic leading-none">{option.hotelName}</p>
+                <div className="flex items-center gap-2 mb-4 text-xs">
                     <span className="font-bold text-brand-rose-700">{option.pricePerNight}</span>
                     <span className="text-brand-rose-300">/</span>
                     <span className="text-[10px] font-black uppercase tracking-widest text-brand-text-subtle">{option.distanceToActivities}</span>
                 </div>
-                <p className="text-lg text-brand-text-main/80 font-light leading-relaxed mb-8 italic serif h-32 overflow-hidden line-clamp-4">"{option.whyGoodForHoneymoon}"</p>
+                <p className="text-base text-brand-text-main/80 font-light leading-relaxed mb-6 italic serif h-24 overflow-hidden line-clamp-3">"{option.whyGoodForHoneymoon}"</p>
                 
-                <div className="space-y-3 mb-10 border-t border-brand-rose-50 pt-6">
+                <div className="space-y-2 mb-8 border-t border-brand-rose-50 pt-4">
                     <p className="text-[9px] font-black uppercase tracking-[0.2em] text-brand-rose-400">{t('amenities')}</p>
                     <div className="flex flex-wrap gap-2">
                         {option.amenities.map((amenity, i) => (
@@ -53,7 +52,7 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ levelKey, level, 
             </div>
             <a href={option.bookingLink} target="_blank" rel="noopener noreferrer" className="w-full bg-brand-rose-700 text-brand-rose-50 font-black uppercase tracking-[0.3em] text-[10px] py-6 rounded-sm hover:bg-brand-rose-800 transition-all duration-300 flex items-center justify-center gap-3">
                 {t('viewAndBook')} 
-                <ExternalLinkIcon className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" />
             </a>
         </motion.div>
     );
@@ -61,19 +60,19 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({ levelKey, level, 
 
 const AccommodationSection: React.FC<{ accommodationOptions: Accommodation[], t: (key: string, replacements?: { [key: string]: string }) => string }> = ({ accommodationOptions, t }) => {
     return (
-        <section id="accommodation" className="mt-24">
-            <div className="flex items-end gap-6 mb-12">
-                <h3 className="text-5xl font-serif font-bold text-brand-text-heading tracking-tight italic">{t('accommodationOptions')}</h3>
+        <section id="accommodation" className="mt-16">
+            <div className="flex items-end gap-5 mb-8">
+                <h3 className="text-4xl font-serif font-bold text-brand-text-heading tracking-tight italic">{t('accommodationOptions')}</h3>
                 <div className="h-[1px] flex-grow bg-brand-rose-400/30 mb-3"></div>
             </div>
-            <div className="space-y-24">
+            <div className="space-y-16">
                 {accommodationOptions.map((acc, index) => (
                     <div key={index}>
-                        <div className="flex items-center gap-6 mb-10 border-b border-brand-rose-50 pb-6">
-                            <div className="w-[2px] h-10 bg-brand-rose-400"></div>
-                            <h4 className="text-4xl font-serif font-black text-brand-text-heading tracking-tighter italic">{t('inCity', {city: acc.city})}</h4>
+                        <div className="flex items-center gap-5 mb-6 border-b border-brand-rose-50 pb-4">
+                            <div className="w-[2px] h-8 bg-brand-rose-400"></div>
+                            <h4 className="text-3xl font-serif font-black text-brand-text-heading tracking-tighter italic">{t('inCity', {city: acc.city})}</h4>
                         </div>
-                         <div className="grid md:grid-cols-3 gap-10">
+                         <div className="grid md:grid-cols-3 gap-8">
                             <AccommodationCard levelKey="budget" level={t('budget')} option={acc.budget} t={t} index={0} />
                             <AccommodationCard levelKey="midRange" level={t('midRange')} option={acc.midRange} t={t} index={1} />
                             <AccommodationCard levelKey="luxury" level={t('luxury')} option={acc.luxury} t={t} index={2} />

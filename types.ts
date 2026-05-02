@@ -7,6 +7,8 @@ export enum AppPhase {
   PLANNING,
   ITINERARY_READY,
   ERROR,
+  SAVED_TRIPS,
+  ADMIN_DASHBOARD,
 }
 
 export interface HoneymoonPreferences {
@@ -131,6 +133,7 @@ export interface VisualTimelineEntry {
 }
 
 export interface DetailedItinerary {
+    title?: string;
     destination: string;
     dayByDay: DayPlan[];
     accommodationOptions: Accommodation[];

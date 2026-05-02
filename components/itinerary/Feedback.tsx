@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import FrownIcon from '../icons/FrownIcon';
-import MehIcon from '../icons/MehIcon';
-import SmileIcon from '../icons/SmileIcon';
+import { Frown, Meh, Smile } from 'lucide-react';
 
 interface FeedbackProps {
     t: (key: string) => string;
@@ -21,9 +19,9 @@ const Feedback: React.FC<FeedbackProps> = ({ t }) => {
     };
 
     const ratings: { id: Rating; icon: React.ElementType; label: string; color: string; activeColor: string }[] = [
-        { id: 'unhappy', icon: FrownIcon, label: t('feedbackUnhappy'), color: 'text-slate-400 bg-slate-50 border-slate-100', activeColor: 'bg-red-50 text-red-600 border-red-200' },
-        { id: 'neutral', icon: MehIcon, label: t('feedbackNeutral'), color: 'text-slate-400 bg-slate-50 border-slate-100', activeColor: 'bg-amber-50 text-amber-600 border-amber-200' },
-        { id: 'happy', icon: SmileIcon, label: t('feedbackHappy'), color: 'text-slate-400 bg-slate-50 border-slate-100', activeColor: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
+        { id: 'unhappy', icon: Frown, label: t('feedbackUnhappy'), color: 'text-slate-400 bg-slate-50 border-slate-100', activeColor: 'bg-red-50 text-red-600 border-red-200' },
+        { id: 'neutral', icon: Meh, label: t('feedbackNeutral'), color: 'text-slate-400 bg-slate-50 border-slate-100', activeColor: 'bg-amber-50 text-amber-600 border-amber-200' },
+        { id: 'happy', icon: Smile, label: t('feedbackHappy'), color: 'text-slate-400 bg-slate-50 border-slate-100', activeColor: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
     ];
 
     return (

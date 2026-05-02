@@ -1,4 +1,5 @@
 import React from 'react';
+import { Plus } from 'lucide-react';
 
 interface ChipInputProps {
     label: string;
@@ -38,7 +39,7 @@ const ChipInput: React.FC<ChipInputProps> = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className="appearance-none w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500"
+                className="appearance-none w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500 transition-all text-sm"
             />
             <div className="flex flex-wrap gap-2 mt-2">
                 {suggestions.map((suggestion, index) => (
@@ -46,9 +47,10 @@ const ChipInput: React.FC<ChipInputProps> = ({
                         key={index}
                         type="button"
                         onClick={() => handleChipClick(suggestion)}
-                        className="px-2.5 py-1 text-xs font-medium text-slate-600 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-brand-rose-600 bg-brand-rose-100 rounded-full hover:bg-brand-rose-200 transition-all transform hover:scale-105"
                     >
-                        + {suggestion}
+                        <Plus size={10} strokeWidth={3} />
+                        {suggestion}
                     </button>
                 ))}
             </div>

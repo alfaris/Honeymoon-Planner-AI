@@ -1,41 +1,32 @@
 
 
-import BeachIcon from './components/icons/BeachIcon';
-import FestivalsEventsIcon from './components/icons/FestivalsEventsIcon';
-import FineDiningIcon from './components/icons/FineDiningIcon';
-import HikingIcon from './components/icons/HikingIcon';
-import MuseumIcon from './components/icons/MuseumIcon';
-import NightlifeIcon from './components/icons/NightlifeIcon';
-import ShoppingIcon from './components/icons/ShoppingIcon';
-import WaterSportsIcon from './components/icons/WaterSportsIcon';
-import WellnessSpaIcon from './components/icons/WellnessSpaIcon';
-
-import GlobeAmericasIcon from './components/icons/GlobeAmericasIcon';
-import HomeIcon from './components/icons/HomeIcon';
-import GlobeIcon from './components/icons/GlobeIcon';
-
-// New Icons
-import TropicalIcon from './components/icons/TropicalIcon';
-import MediterraneanIcon from './components/icons/MediterraneanIcon';
-import TemperateIcon from './components/icons/TemperateIcon';
-import MountainIcon from './components/icons/MountainIcon';
-import DesertIcon from './components/icons/DesertIcon';
-import SnowflakeIcon from './components/icons/SnowflakeIcon';
-
-import StarIcon from './components/icons/StarIcon';
-import BoutiqueHotelIcon from './components/icons/BoutiqueHotelIcon';
-
-import StreetFoodIcon from './components/icons/StreetFoodIcon';
-import CasualDiningIcon from './components/icons/CasualDiningIcon';
-import FusionIcon from './components/icons/FusionIcon';
-import VegetarianIcon from './components/icons/VegetarianIcon';
-
-import LuxuryResortIcon from './components/icons/LuxuryResortIcon';
-import CityscapeIcon from './components/icons/CityscapeIcon';
-import CountrysideIcon from './components/icons/CountrysideIcon';
-import CompassIcon from './components/icons/CompassIcon';
-import WildlifeIcon from './components/icons/WildlifeIcon';
-import CulinaryIcon from './components/icons/CulinaryIcon';
+import { 
+    Palmtree, 
+    Mountain, 
+    Landmark, 
+    Building2, 
+    Trees, 
+    Compass, 
+    PawPrint, 
+    ChefHat, 
+    UtensilsCrossed, 
+    Music, 
+    Flower2, 
+    Waves, 
+    ShoppingBag, 
+    PartyPopper, 
+    CloudSun, 
+    Sun, 
+    Snowflake, 
+    Hotel, 
+    Store, 
+    Utensils, 
+    Zap, 
+    Leaf, 
+    Star, 
+    Globe, 
+    Home
+} from 'lucide-react';
 
 export type TranslationSet = {
     [key: string]: any;
@@ -169,6 +160,39 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
         copied: "Copied!",
         shareOn: "Share on",
 
+        // User
+        myTrips: "My Trips",
+        saveToProfile: "Save to Profile",
+        savedToProfile: "Saved to Profile",
+        saving: "Saving...",
+        loginToSave: "Login to Save",
+        credits: "Credits",
+        signIn: "Sign In",
+        signingIn: "Signing in...",
+        buyCredits: "Get More Credits",
+        creditShopTitle: "Curate more dreams",
+        creditShopSub: "Top up your account to generate more bespoke itineraries.",
+        tenCredits: "10 Credits",
+        twentyCredits: "25 Credits",
+        fiftyCredits: "60 Credits",
+        popular: "Most Popular",
+        bestValue: "Best Value",
+        buy: "Purchase",
+        purchasing: "Processing...",
+        successPurchase: "Request submitted! We will verify your payment shortly.",
+        oneCreditMsg: "Each itinerary generation costs 1 credit.",
+        payViaInstapay: "Pay via Instapay",
+        instapayHandle: "Instapay Handle",
+        instapayInfo: "Please transfer the amount to the address below, then upload the screenshot or enter the transaction reference.",
+        uploadProof: "Upload Screenshot",
+        referenceHint: "Or enter transaction reference number",
+        submitRequest: "Submit Verification Request",
+        pendingRequest: "You have a pending request. Please wait for verification.",
+        myRequests: "My Purchase Requests",
+        status: "Status",
+        date: "Date",
+        amount: "Amount",
+
         // PDF Download
         downloadPDF: "Download as PDF",
         generatingPDF: "Generating PDF...",
@@ -197,61 +221,61 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
 
         // Constants Data
         honeymoonTypes: [
-            { id: 'abroad', name: 'Abroad', icon: GlobeAmericasIcon },
-            { id: 'local', name: 'Local', icon: HomeIcon }
+            { id: 'abroad', name: 'Abroad', icon: Globe },
+            { id: 'local', name: 'Local', icon: Home }
         ],
         destinationRegions: [
-            { id: 'anywhere', name: 'Anywhere', icon: GlobeIcon },
-            { id: 'europe', name: 'Europe', icon: GlobeIcon },
-            { id: 'asia', name: 'Asia', icon: GlobeIcon },
-            { id: 'north_america', name: 'North America', icon: GlobeIcon },
-            { id: 'south_america', name: 'South America', icon: GlobeIcon },
-            { id: 'africa', name: 'Africa', icon: GlobeIcon },
-            { id: 'oceania', name: 'Oceania (Australia & Pacific)', icon: GlobeIcon }
+            { id: 'anywhere', name: 'Anywhere', icon: Globe },
+            { id: 'europe', name: 'Europe', icon: Globe },
+            { id: 'asia', name: 'Asia', icon: Globe },
+            { id: 'north_america', name: 'North America', icon: Globe },
+            { id: 'south_america', name: 'South America', icon: Globe },
+            { id: 'africa', name: 'Africa', icon: Globe },
+            { id: 'oceania', name: 'Oceania (Australia & Pacific)', icon: Globe }
         ],
         travelStyles: [
-            { id: 'luxury', name: 'Luxury Resort Relaxation', icon: LuxuryResortIcon },
-            { id: 'beach', name: 'Beach & Ocean Activities', icon: BeachIcon },
-            { id: 'adventure', name: 'Adventure & Hiking', icon: HikingIcon },
-            { id: 'culture', name: 'Cultural & Historical', icon: MuseumIcon },
-            { id: 'city', name: 'Urban City Experiences', icon: CityscapeIcon },
-            { id: 'countryside', name: 'Romantic Countryside', icon: CountrysideIcon },
-            { id: 'off-the-beaten-path', name: 'Off-the-Beaten-Path', icon: CompassIcon },
-            { id: 'wildlife', name: 'Wildlife & Nature', icon: WildlifeIcon },
-            { id: 'foodie', name: 'Food & Culinary', icon: CulinaryIcon }
+            { id: 'luxury', name: 'Luxury Resort Relaxation', icon: Palmtree },
+            { id: 'beach', name: 'Beach & Ocean Activities', icon: Waves },
+            { id: 'adventure', name: 'Adventure & Hiking', icon: Mountain },
+            { id: 'culture', name: 'Cultural & Historical', icon: Landmark },
+            { id: 'city', name: 'Urban City Experiences', icon: Building2 },
+            { id: 'countryside', name: 'Romantic Countryside', icon: Trees },
+            { id: 'off-the-beaten-path', name: 'Off-the-Beaten-Path', icon: Compass },
+            { id: 'wildlife', name: 'Wildlife & Nature', icon: PawPrint },
+            { id: 'foodie', name: 'Food & Culinary', icon: ChefHat }
         ],
         activitiesList: [
-            { id: 'beach', name: 'Beach', icon: BeachIcon }, 
-            { id: 'hiking', name: 'Hiking', icon: HikingIcon }, 
-            { id: 'museums', name: 'Museums', icon: MuseumIcon },
-            { id: 'fine_dining', name: 'Fine Dining', icon: FineDiningIcon }, 
-            { id: 'nightlife', name: 'Nightlife', icon: NightlifeIcon }, 
-            { id: 'wellness_spa', name: 'Wellness/Spa', icon: WellnessSpaIcon },
-            { id: 'water_sports', name: 'Water Sports', icon: WaterSportsIcon }, 
-            { id: 'shopping', name: 'Shopping', icon: ShoppingIcon }, 
-            { id: 'festivals_events', name: 'Festivals/Events', icon: FestivalsEventsIcon }
+            { id: 'beach', name: 'Beach', icon: Waves }, 
+            { id: 'hiking', name: 'Hiking', icon: Mountain }, 
+            { id: 'museums', name: 'Museums', icon: Landmark },
+            { id: 'fine_dining', name: 'Fine Dining', icon: UtensilsCrossed }, 
+            { id: 'nightlife', name: 'Nightlife', icon: Music }, 
+            { id: 'wellness_spa', name: 'Wellness/Spa', icon: Flower2 },
+            { id: 'water_sports', name: 'Water Sports', icon: Waves }, 
+            { id: 'shopping', name: 'Shopping', icon: ShoppingBag }, 
+            { id: 'festivals_events', name: 'Festivals/Events', icon: PartyPopper }
         ],
         climates: [
-            { id: 'tropical', name: 'Tropical', icon: TropicalIcon }, 
-            { id: 'mediterranean', name: 'Mediterranean', icon: MediterraneanIcon }, 
-            { id: 'temperate', name: 'Temperate', icon: TemperateIcon },
-            { id: 'mountain', name: 'Mountain', icon: MountainIcon }, 
-            { id: 'desert', name: 'Desert', icon: DesertIcon }, 
-            { id: 'snow', name: 'Snow', icon: SnowflakeIcon }
+            { id: 'tropical', name: 'Tropical', icon: Palmtree }, 
+            { id: 'mediterranean', name: 'Mediterranean', icon: Sun }, 
+            { id: 'temperate', name: 'Temperate', icon: CloudSun },
+            { id: 'mountain', name: 'Mountain', icon: Mountain }, 
+            { id: 'desert', name: 'Desert', icon: Sun }, 
+            { id: 'snow', name: 'Snow', icon: Snowflake }
         ],
         accommodationStyles: [
-            { id: 'budget', name: 'Budget-friendly', icon: StarIcon }, 
-            { id: 'comfortable', name: 'Comfortable', icon: StarIcon }, 
-            { id: 'upscale', name: 'Upscale', icon: StarIcon },
-            { id: 'ultra_luxury', name: 'Ultra-luxury', icon: StarIcon }, 
-            { id: 'boutique', name: 'Unique/Boutique', icon: BoutiqueHotelIcon }
+            { id: 'budget', name: 'Budget-friendly', icon: Star }, 
+            { id: 'comfortable', name: 'Comfortable', icon: Star }, 
+            { id: 'upscale', name: 'Upscale', icon: Star },
+            { id: 'ultra_luxury', name: 'Ultra-luxury', icon: Star }, 
+            { id: 'boutique', name: 'Unique/Boutique', icon: Hotel }
         ],
         diningPreferences: [
-            { id: 'street_food', name: 'Street Food', icon: StreetFoodIcon }, 
-            { id: 'casual', name: 'Casual', icon: CasualDiningIcon }, 
-            { id: 'fine_dining', name: 'Fine Dining', icon: FineDiningIcon },
-            { id: 'fusion', name: 'Fusion', icon: FusionIcon }, 
-            { id: 'vegetarian', name: 'Vegetarian-friendly', icon: VegetarianIcon }
+            { id: 'street_food', name: 'Street Food', icon: Store }, 
+            { id: 'casual', name: 'Casual', icon: Utensils }, 
+            { id: 'fine_dining', name: 'Fine Dining', icon: UtensilsCrossed },
+            { id: 'fusion', name: 'Fusion', icon: Zap }, 
+            { id: 'vegetarian', name: 'Vegetarian-friendly', icon: Leaf }
         ],
         partnerBalanceOptions: [
             { id: 'balanced', name: 'A good mix of both our tastes' },
@@ -387,6 +411,39 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
         copyLink: "نسخ الرابط",
         copied: "تم النسخ!",
         shareOn: "المشاركة على",
+
+        // User
+        myTrips: "رحلاتي",
+        saveToProfile: "حفظ في الملف الشخصي",
+        savedToProfile: "تم الحفظ",
+        saving: "جاري الحفظ...",
+        loginToSave: "سجل الدخول للحفظ",
+        credits: "رصيد",
+        signIn: "تسجيل الدخول",
+        signingIn: "جاري الدخول...",
+        buyCredits: "الحصول على رصيد إضافي",
+        creditShopTitle: "حقق المزيد من الأحلام",
+        creditShopSub: "اشحن حسابك لتوليد المزيد من خطط السفر المخصصة.",
+        tenCredits: "10 رصيد",
+        twentyCredits: "25 رصيد",
+        fiftyCredits: "60 رصيد",
+        popular: "الأكثر شيوعاً",
+        bestValue: "أفضل قيمة",
+        buy: "شراء",
+        purchasing: "جاري المعالجة...",
+        successPurchase: "تم إرسال الطلب! سنتحقق من عملية الدفع قريباً.",
+        oneCreditMsg: "كل عملية توليد خطة تستهلك 1 رصيد.",
+        payViaInstapay: "الدفع عبر إنستا باي",
+        instapayHandle: "معرف إنستا باي",
+        instapayInfo: "يرجى تحويل المبلغ إلى العنوان أدناه، ثم قم برفع لقطة الشاشة أو أدخل مرجع المعاملة.",
+        uploadProof: "رفع لقطة الشاشة",
+        referenceHint: "أو أدخل رقم مرجع المعاملة",
+        submitRequest: "إرسال طلب التحقق",
+        pendingRequest: "لديك طلب معلق. يرجى الانتظار للتحقق.",
+        myRequests: "طلبات الشراء الخاصة بي",
+        status: "الحالة",
+        date: "التاريخ",
+        amount: "الكمية",
         
         // PDF Download
         downloadPDF: "تحميل كملف PDF",
@@ -416,61 +473,61 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
 
         // Constants Data
         honeymoonTypes: [
-            { id: 'abroad', name: 'في الخارج', icon: GlobeAmericasIcon },
-            { id: 'local', name: 'محلي', icon: HomeIcon }
+            { id: 'abroad', name: 'في الخارج', icon: Globe },
+            { id: 'local', name: 'محلي', icon: Home }
         ],
         destinationRegions: [
-            { id: 'anywhere', name: 'أي مكان', icon: GlobeIcon },
-            { id: 'europe', name: 'أوروبا', icon: GlobeIcon },
-            { id: 'asia', name: 'آسيا', icon: GlobeIcon },
-            { id: 'north_america', name: 'أمريكا الشمالية', icon: GlobeIcon },
-            { id: 'south_america', name: 'أمريكا الجنوبية', icon: GlobeIcon },
-            { id: 'africa', name: 'أفريقيا', icon: GlobeIcon },
-            { id: 'oceania', name: 'أوقيانوسيا (أستراليا والمحيط الهادئ)', icon: GlobeIcon }
+            { id: 'anywhere', name: 'أي مكان', icon: Globe },
+            { id: 'europe', name: 'أوروبا', icon: Globe },
+            { id: 'asia', name: 'آسيا', icon: Globe },
+            { id: 'north_america', name: 'أمريكا الشمالية', icon: Globe },
+            { id: 'south_america', name: 'أمريكا الجنوبية', icon: Globe },
+            { id: 'africa', name: 'أفريقيا', icon: Globe },
+            { id: 'oceania', name: 'أوقيانوسيا (أستراليا والمحيط الهادئ)', icon: Globe }
         ],
         travelStyles: [
-            { id: 'luxury', name: 'استرخاء في منتجع فاخر', icon: LuxuryResortIcon },
-            { id: 'beach', name: 'أنشطة شاطئية ومحيطية', icon: BeachIcon },
-            { id: 'adventure', name: 'مغامرة وتنزه', icon: HikingIcon },
-            { id: 'culture', name: 'ثقافية وتاريخية', icon: MuseumIcon },
-            { id: 'city', name: 'تجارب في المدن الحضرية', icon: CityscapeIcon },
-            { id: 'countryside', name: 'ريف رومانسي', icon: CountrysideIcon },
-            { id: 'off-the-beaten-path', name: 'بعيدًا عن المسارات المعتادة', icon: CompassIcon },
-            { id: 'wildlife', name: 'حياة برية وطبيعة', icon: WildlifeIcon },
-            { id: 'foodie', name: 'طعام وفنون الطهي', icon: CulinaryIcon }
+            { id: 'luxury', name: 'استرخاء في منتجع فاخر', icon: Palmtree },
+            { id: 'beach', name: 'أنشطة شاطئية ومحيطية', icon: Waves },
+            { id: 'adventure', name: 'مغامرة وتنزه', icon: Mountain },
+            { id: 'culture', name: 'ثقافية وتاريخية', icon: Landmark },
+            { id: 'city', name: 'تجارب في المدن الحضرية', icon: Building2 },
+            { id: 'countryside', name: 'ريف رومانسي', icon: Trees },
+            { id: 'off-the-beaten-path', name: 'بعيدًا عن المسارات المعتادة', icon: Compass },
+            { id: 'wildlife', name: 'حياة برية وطبيعة', icon: PawPrint },
+            { id: 'foodie', name: 'طعام وفنون الطهي', icon: ChefHat }
         ],
         activitiesList: [
-            { id: 'beach', name: 'شاطئ', icon: BeachIcon }, 
-            { id: 'hiking', name: 'تنزه', icon: HikingIcon }, 
-            { id: 'museums', name: 'متاحف', icon: MuseumIcon },
-            { id: 'fine_dining', name: 'عشاء فاخر', icon: FineDiningIcon }, 
-            { id: 'nightlife', name: 'حياة ليلية', icon: NightlifeIcon }, 
-            { id: 'wellness_spa', name: 'صحة/سبا', icon: WellnessSpaIcon },
-            { id: 'water_sports', name: 'رياضات مائية', icon: WaterSportsIcon }, 
-            { id: 'shopping', name: 'تسوق', icon: ShoppingIcon }, 
-            { id: 'festivals_events', name: 'مهرجانات/فعاليات', icon: FestivalsEventsIcon }
+            { id: 'beach', name: 'شاطئ', icon: Waves }, 
+            { id: 'hiking', name: 'تنزه', icon: Mountain }, 
+            { id: 'museums', name: 'متاحف', icon: Landmark },
+            { id: 'fine_dining', name: 'عشاء فاخر', icon: UtensilsCrossed }, 
+            { id: 'nightlife', name: 'حياة ليلية', icon: Music }, 
+            { id: 'wellness_spa', name: 'صحة/سبا', icon: Flower2 },
+            { id: 'water_sports', name: 'رياضات مائية', icon: Waves }, 
+            { id: 'shopping', name: 'تسوق', icon: ShoppingBag }, 
+            { id: 'festivals_events', name: 'مهرجانات/فعاليات', icon: PartyPopper }
         ],
         climates: [
-            { id: 'tropical', name: 'استوائي', icon: TropicalIcon }, 
-            { id: 'mediterranean', name: 'بحر متوسط', icon: MediterraneanIcon }, 
-            { id: 'temperate', name: 'معتدل', icon: TemperateIcon },
-            { id: 'mountain', name: 'جبلي', icon: MountainIcon }, 
-            { id: 'desert', name: 'صحراوي', icon: DesertIcon }, 
-            { id: 'snow', name: 'ثلجي', icon: SnowflakeIcon }
+            { id: 'tropical', name: 'استوائي', icon: Palmtree }, 
+            { id: 'mediterranean', name: 'بحر متوسط', icon: Sun }, 
+            { id: 'temperate', name: 'معتدل', icon: CloudSun },
+            { id: 'mountain', name: 'جبلي', icon: Mountain }, 
+            { id: 'desert', name: 'صحراوي', icon: Sun }, 
+            { id: 'snow', name: 'ثلجي', icon: Snowflake }
         ],
         accommodationStyles: [
-            { id: 'budget', name: 'اقتصادي', icon: StarIcon }, 
-            { id: 'comfortable', name: 'مريح', icon: StarIcon }, 
-            { id: 'upscale', name: 'راقي', icon: StarIcon },
-            { id: 'ultra_luxury', name: 'فخم جدًا', icon: StarIcon }, 
-            { id: 'boutique', name: 'فريد/بوتيك', icon: BoutiqueHotelIcon }
+            { id: 'budget', name: 'اقتصادي', icon: Star }, 
+            { id: 'comfortable', name: 'مريح', icon: Star }, 
+            { id: 'upscale', name: 'راقي', icon: Star },
+            { id: 'ultra_luxury', name: 'فخم جدًا', icon: Star }, 
+            { id: 'boutique', name: 'فريد/بوتيك', icon: Hotel }
         ],
         diningPreferences: [
-            { id: 'street_food', name: 'طعام الشارع', icon: StreetFoodIcon }, 
-            { id: 'casual', name: 'غير رسمي', icon: CasualDiningIcon }, 
-            { id: 'fine_dining', name: 'عشاء فاخر', icon: FineDiningIcon },
-            { id: 'fusion', name: 'مزيج', icon: FusionIcon }, 
-            { id: 'vegetarian', name: 'صديق للنباتيين', icon: VegetarianIcon }
+            { id: 'street_food', name: 'طعام الشارع', icon: Store }, 
+            { id: 'casual', name: 'غير رسمي', icon: Utensils }, 
+            { id: 'fine_dining', name: 'عشاء فاخر', icon: UtensilsCrossed },
+            { id: 'fusion', name: 'مزيج', icon: Zap }, 
+            { id: 'vegetarian', name: 'صديق للنباتيين', icon: Leaf }
         ],
         partnerBalanceOptions: [
             { id: 'balanced', name: 'مزيج جيد من أذواقنا' },

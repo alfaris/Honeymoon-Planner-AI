@@ -21,7 +21,7 @@ const FormInput: React.FC<FormInputProps> = ({
 
     return (
     <div className={fullWidth ? "md:col-span-2" : isTextArea ? "md:col-span-1" : ""}>
-        <label htmlFor={name} className="block text-[10px] font-bold uppercase tracking-widest text-brand-text-subtle/80 mb-3 ml-1">
+        <label htmlFor={name} className="block text-[10px] font-bold uppercase tracking-widest text-brand-text-subtle/80 mb-3 ms-1">
             {label}
             {required && <span className="text-brand-rose-500">*</span>}
         </label>

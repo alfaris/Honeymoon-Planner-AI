@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { HoneymoonPreferences } from '../types';
 import { translations } from '../constants';
 import { getCountryFromCoords } from '../services/geminiService';
@@ -152,23 +152,40 @@ const DiscoveryForm: React.FC<DiscoveryFormProps> = ({ onStartPlanning, isLoadin
 
     return (
         <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-20 relative">
-                <div className="absolute -top-16 left-1/2 -translate-x-1/2 text-[14rem] font-serif font-black text-brand-rose-200/20 select-none -z-10 tracking-widest italic">
-                    01
-                </div>
-                 <h2 className="text-7xl md:text-8xl font-serif font-black text-brand-text-heading tracking-tighter leading-[0.85] mb-8">
+            <header className="text-center mb-10 relative">
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1 }}
+                    className="absolute -top-16 left-1/2 -translate-x-1/2 text-[12rem] font-serif font-black text-brand-rose-200/5 select-none -z-10 tracking-[0.5em] italic pointer-events-none"
+                >
+                    JOURNEY
+                </motion.div>
+                <motion.h2 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-5xl md:text-6xl font-serif font-black text-brand-text-heading tracking-tighter leading-tight mb-6 italic"
+                >
                     {t('discoveryTitle')}
-                </h2>
-                <p className="text-2xl text-brand-text-subtle max-w-2xl mx-auto font-light leading-relaxed italic opacity-80 font-serif">
-                    {t('discoverySubtitle')}
-                </p>
-            </div>
-            
-            <div className="mb-16">
+                </motion.h2>
+                <div className="flex items-center justify-center gap-6 mb-8">
+                    <div className="h-px w-8 bg-brand-rose-300"></div>
+                    <p className="text-xl text-brand-text-subtle font-light italic font-serif max-w-xl">
+                        {t('discoverySubtitle')}
+                    </p>
+                    <div className="h-px w-8 bg-brand-rose-300"></div>
+                </div>
+            </header>
+
+            <div className="mb-12 sticky top-[84px] z-30 bg-white/80 backdrop-blur-md pt-4">
+                <div className="flex items-center justify-between px-2 mb-4">
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-brand-rose-400">{t('step')} {step} / 4</span>
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-brand-rose-400">{Math.round((step / 4) * 100)}%</span>
+                </div>
                 <ProgressBar progress={progress} />
-                <div className="grid grid-cols-4 gap-4 mt-4">
+                <div className="grid grid-cols-4 gap-4 mt-2 px-1">
                     {['practicalNeeds', 'budgetTimeline', 'travelStyle', 'personalTouches'].map((key, i) => (
-                        <div key={key} className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-500 ${step > i ? 'text-brand-rose-600' : 'text-brand-text-subtle/60'}`}>
+                        <div key={key} className={`text-[8px] font-black uppercase tracking-[0.2em] transition-colors duration-500 text-center ${step >= i + 1 ? 'text-brand-rose-600' : 'text-brand-text-subtle/30'}`}>
                             {t(key)}
                         </div>
                     ))}
@@ -316,53 +333,71 @@ const DiscoveryForm: React.FC<DiscoveryFormProps> = ({ onStartPlanning, isLoadin
                 </AnimatePresence>
             </div>
 
-            <div className="flex justify-between items-center mt-12 pt-8 border-t border-[var(--brand-border-soft)]">
-                <button
+            <div className="flex justify-between items-center mt-10 pt-6 border-t border-[var(--brand-border-soft)]">
+                <motion.button
                     type="button"
                     onClick={prevStep}
                     disabled={step === 1 || isLoading}
+                    whileHover={{ x: -4 }}
+                    whileTap={{ scale: 0.95 }}
                     className={`flex items-center gap-2 px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] transition-all ${
                         step === 1 
                         ? 'opacity-0 pointer-events-none' 
                         : 'text-brand-text-subtle hover:text-brand-rose-800 hover:bg-brand-rose-100'
                     }`}
                 >
-                    {language === 'ar' ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+                    {language === 'ar' ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
                     {language === 'ar' ? 'السابق' : 'Previous'}
-                </button>
+                </motion.button>
 
                 {step < totalSteps ? (
-                    <button
+                    <motion.button
                         type="button"
                         onClick={nextStep}
                         disabled={!isStepValid || isLoading}
-                        className="flex items-center gap-3 bg-brand-rose-700 text-brand-rose-50 px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl shadow-brand-rose-700/10 hover:shadow-brand-rose-700/20 hover:bg-brand-rose-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex items-center gap-3 bg-brand-rose-700 text-brand-rose-50 px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl shadow-brand-rose-700/20 hover:bg-brand-rose-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
                     >
                         {language === 'ar' ? 'التالي' : 'Continue'}
-                        {language === 'ar' ? <ChevronLeft size={20} /> : <ChevronRight size={18} />}
-                    </button>
+                        <motion.div
+                            animate={{ x: [0, 4, 0] }}
+                            transition={{ repeat: Infinity, duration: 1.5 }}
+                        >
+                            {language === 'ar' ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+                        </motion.div>
+                    </motion.button>
                 ) : (
-                    <button 
+                    <motion.button 
                         type="button" 
                         onClick={() => onStartPlanning(prefs)}
                         disabled={!isStepValid || isLoading}
-                        className="flex items-center gap-3 bg-gradient-to-r from-brand-rose-700 to-brand-rose-800 text-brand-rose-50 px-12 py-5 rounded-full font-bold uppercase tracking-widest text-sm shadow-2xl shadow-brand-rose-800/20 hover:shadow-brand-rose-800/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex items-center gap-3 bg-brand-rose-700 text-brand-rose-50 px-12 py-5 rounded-full font-bold uppercase tracking-widest text-sm shadow-2xl shadow-brand-rose-800/20 hover:bg-brand-rose-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden relative"
                     >
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full"
+                            animate={{ x: ['100%', '-100%'] }}
+                            transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                        />
                         {isLoading ? (
                             <div className="flex items-center gap-3">
-                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                                >
+                                    <Sparkles size={20} />
+                                </motion.div>
                                 <span>{t('planning')}</span>
                             </div>
                         ) : (
                             <>
-                                <Sparkles size={20} />
+                                <Sparkles size={20} className="text-brand-rose-300" />
                                 <span>{t('findMyHoneymoon')}</span>
                             </>
                         )}
-                    </button>
+                    </motion.button>
                 )}
             </div>
         </div>

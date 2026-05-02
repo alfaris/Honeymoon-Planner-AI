@@ -1,9 +1,11 @@
 import React from 'react';
 import { DetailedCostBreakdown, VisualTimelineEntry } from '../../types';
-import CalendarIcon from '../icons/CalendarIcon';
-import MoneyIcon from '../icons/MoneyIcon';
-import HeartIcon from '../icons/HeartIcon';
-import SparkleIcon from '../icons/SparkleIcon';
+import { 
+    Calendar, 
+    Wallet, 
+    Heart, 
+    Sparkles 
+} from 'lucide-react';
 
 
 const CostAndTimeline: React.FC<{ breakdown: DetailedCostBreakdown; timeline: VisualTimelineEntry[]; t: (key: string, replacements?: { [key: string]: string }) => string }> = ({ breakdown, timeline, t }) => {
@@ -14,7 +16,7 @@ const CostAndTimeline: React.FC<{ breakdown: DetailedCostBreakdown; timeline: Vi
             {/* Timeline */}
             <h3 className="text-2xl font-serif font-black text-brand-text-heading mb-8 tracking-tight flex items-center gap-3">
                 <div className="p-2 bg-brand-rose-50 rounded-lg">
-                    <CalendarIcon className="h-5 w-5 text-brand-rose-500" />
+                    <Calendar className="h-5 w-5 text-brand-rose-500" />
                 </div>
                 {t('visualTimeline')}
             </h3>
@@ -27,8 +29,8 @@ const CostAndTimeline: React.FC<{ breakdown: DetailedCostBreakdown; timeline: Vi
                             </div>
                             <span className="text-sm font-bold text-brand-text-heading group-hover:text-brand-rose-600 transition-colors duration-300 flex items-center gap-2">
                                 {tItem.title} 
-                                {tItem.isRomantic && <HeartIcon className="h-3 w-3 text-brand-rose-500" />} 
-                                {tItem.isSpecial && <SparkleIcon className="h-3 w-3 text-amber-400" />}
+                                {tItem.isRomantic && <Heart className="h-3 w-3 text-brand-rose-500 fill-current" />} 
+                                {tItem.isSpecial && <Sparkles className="h-3 w-3 text-amber-400 fill-current" />}
                             </span>
                         </div>
                         <span className="text-xs font-black text-brand-text-subtle/60">{tItem.cost}</span>
@@ -39,7 +41,7 @@ const CostAndTimeline: React.FC<{ breakdown: DetailedCostBreakdown; timeline: Vi
             {/* Cost Breakdown */}
             <h3 className="text-2xl font-serif font-black text-brand-text-heading mb-8 pt-10 border-t border-black/5 tracking-tight flex items-center gap-3">
                  <div className="p-2 bg-brand-rose-50 rounded-lg">
-                    <MoneyIcon className="h-5 w-5 text-brand-rose-500" />
+                    <Wallet className="h-5 w-5 text-brand-rose-500" />
                  </div>
                  {t('detailedCost')}
             </h3>

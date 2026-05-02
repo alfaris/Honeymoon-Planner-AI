@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { AppPhase, HoneymoonPreferences, Phase1Response, DetailedItinerary, DestinationRecommendation } from './types';
 import { getRecommendations, getItinerary, generateImage } from './services/geminiService';
 import { translations } from './constants';
@@ -11,6 +11,10 @@ import Itinerary from './components/Itinerary';
 import LoadingIndicator from './components/LoadingIndicator';
 import Header from './components/layout/Header';
 import ErrorDisplay from './components/common/ErrorDisplay';
+import SavedTrips from './components/SavedTrips';
+import AdminDashboard from './components/AdminDashboard';
+import { useUser } from './context/UserContext';
+import CreditShop from './components/itinerary/CreditShop';
 
 const safeJSONParse = (val: string | null, fallback: any) => {
     if (!val || val === "undefined" || val === "null") return fallback;
@@ -52,6 +56,7 @@ const App: React.FC = () => {
         return safeJSONParse(localStorage.getItem('hp_itinerary'), null);
     });
     const [error, setError] = useState<string | null>(null);
+    const [isCreditShopOpen, setIsCreditShopOpen] = useState(false);
     const [selectedDestination, setSelectedDestination] = useState<string>(() => {
         return localStorage.getItem('hp_selected_destination') || '';
     });
@@ -174,12 +179,32 @@ const App: React.FC = () => {
 
     const isLoading = phase === AppPhase.RECOMMENDING || phase === AppPhase.PLANNING;
 
+    const { credits, consumeCredit, user, login } = useUser();
+
     const handleStartPlanning = useCallback(async (prefs: HoneymoonPreferences) => {
+        if (!user) {
+            try {
+                await login();
+                return; // Let user click again after login
+            } catch (err) {
+                return;
+            }
+        }
+
+        if (credits <= 0) {
+            setIsCreditShopOpen(true);
+            return;
+        }
+
         setPreferences(prefs);
         setPhase(AppPhase.RECOMMENDING);
         setError(null);
         setRecommendationImages({});
         try {
+            const consumed = await consumeCredit();
+            if (!consumed) {
+                throw new Error("Failed to consume credit. Please try again.");
+            }
             const result = await getRecommendations(prefs, language);
             setRecommendations(result);
             setPhase(AppPhase.RECOMMENDATIONS_READY);
@@ -188,14 +213,24 @@ const App: React.FC = () => {
             setError(e instanceof Error ? e.message : 'An unknown error occurred.');
             setPhase(AppPhase.ERROR);
         }
-    }, [language]);
+    }, [language, user, credits, login, consumeCredit]);
 
     const handleSelectDestination = useCallback(async (destination: DestinationRecommendation) => {
-        if (!preferences) return;
+        if (!preferences || !user) return;
+
+        if (credits <= 0) {
+            setIsCreditShopOpen(true);
+            return;
+        }
+
         setSelectedDestination(destination.destinationName);
         setPhase(AppPhase.PLANNING);
         setError(null);
         try {
+            const consumed = await consumeCredit();
+            if (!consumed) {
+                throw new Error("Failed to consume credit. Please try again.");
+            }
             const result = await getItinerary(destination.destinationName, preferences, language);
             setItinerary(result);
             setPhase(AppPhase.ITINERARY_READY);
@@ -204,7 +239,7 @@ const App: React.FC = () => {
             setError(e instanceof Error ? e.message : 'An unknown error occurred.');
             setPhase(AppPhase.ERROR);
         }
-    }, [preferences, language]);
+    }, [preferences, language, user, credits, consumeCredit]);
 
     const handleRestart = useCallback(() => {
         setPhase(AppPhase.DISCOVERY);
@@ -222,6 +257,12 @@ const App: React.FC = () => {
         setItinerary(null);
     }, []);
 
+    const handleSelectSavedTrip = useCallback((savedItinerary: DetailedItinerary, savedPreferences: HoneymoonPreferences) => {
+        setItinerary(savedItinerary);
+        setPreferences(savedPreferences);
+        setPhase(AppPhase.ITINERARY_READY);
+    }, []);
+
     const renderContent = () => {
         const props = { t, language };
         switch (phase) {
@@ -237,6 +278,10 @@ const App: React.FC = () => {
                 return <LoadingIndicator key="loading-itinerary" text={processedSteps} />;
             case AppPhase.ITINERARY_READY:
                 return itinerary && preferences && <Itinerary key="itinerary" itinerary={itinerary} preferences={preferences} onBack={handleBackToRecommendations} onRestart={handleRestart} {...props} />;
+            case AppPhase.SAVED_TRIPS:
+                return <SavedTrips onSelectTrip={handleSelectSavedTrip} onBack={() => setPhase(AppPhase.DISCOVERY)} {...props} />;
+            case AppPhase.ADMIN_DASHBOARD:
+                return <AdminDashboard t={t} onClose={() => setPhase(AppPhase.DISCOVERY)} />;
             case AppPhase.ERROR:
                 return error && <ErrorDisplay key="error" message={error} onRetry={handleRestart} t={t} />;
             default:
@@ -245,10 +290,11 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen">
-            <Header t={t} language={language} setLanguage={setLanguage} />
+        <div className="min-h-screen" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+            <Header t={t} language={language} setLanguage={setLanguage} onNavigate={setPhase} onOpenCreditShop={() => setIsCreditShopOpen(true)} />
+            <CreditShop isOpen={isCreditShopOpen} onClose={() => setIsCreditShopOpen(false)} t={t} />
             <main>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={phase}
