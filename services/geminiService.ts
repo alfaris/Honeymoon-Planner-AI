@@ -1,13 +1,20 @@
 
 
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, ThinkingLevel } from "@google/genai";
 import { HoneymoonPreferences, Phase1Response, DetailedItinerary } from '../types';
 
-const API_KEY = process.env.API_KEY;
-if (!API_KEY) {
-    throw new Error("API_KEY environment variable not set.");
+let aiClient: GoogleGenAI | null = null;
+
+function getAi() {
+    if (!aiClient) {
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+            throw new Error("GEMINI_API_KEY environment variable not set. Please add it to your environment.");
+        }
+        aiClient = new GoogleGenAI({ apiKey });
+    }
+    return aiClient;
 }
-const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 const recommendationSchema = {
     type: Type.OBJECT,
@@ -230,9 +237,10 @@ Return the response in a structured JSON format. Ensure all costs are in ${prefs
 
 export const getRecommendations = async (preferences: HoneymoonPreferences, language: 'en' | 'ar'): Promise<Phase1Response> => {
     const prompt = generatePhase1Prompt(preferences, language);
+    const ai = getAi();
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-3-flash-preview',
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
@@ -249,14 +257,15 @@ export const getRecommendations = async (preferences: HoneymoonPreferences, lang
 
 export const getItinerary = async (destination: string, preferences: HoneymoonPreferences, language: 'en' | 'ar'): Promise<DetailedItinerary> => {
     const prompt = generatePhase2Prompt(destination, preferences, language);
+    const ai = getAi();
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-pro', // Using a more powerful model for the complex itinerary
+            model: 'gemini-3.1-pro-preview', // Using a more powerful model for the complex itinerary
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
                 responseSchema: itinerarySchema,
-                thinkingConfig: { thinkingBudget: 32768 }
+                thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH }
             }
         });
         const jsonText = response.text.trim();
@@ -269,9 +278,10 @@ export const getItinerary = async (destination: string, preferences: HoneymoonPr
 
 export const getCountryFromCoords = async (lat: number, lon: number): Promise<string> => {
     const prompt = `What country is at latitude ${lat} and longitude ${lon}? Respond with ONLY the country name.`;
+    const ai = getAi();
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-3-flash-preview',
             contents: prompt,
         });
         return response.text.trim();
@@ -282,22 +292,38 @@ export const getCountryFromCoords = async (lat: number, lon: number): Promise<st
 };
 
 export const generateImage = async (prompt: string): Promise<string> => {
+    const ai = getAi();
     try {
-        const response = await ai.models.generateImages({
-            model: 'imagen-4.0-generate-001',
-            prompt: `${prompt}, travel poster style, romantic, high detail, cinematic lighting`,
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash-image',
+            contents: {
+                parts: [
+                    {
+                        text: `${prompt}, travel poster style, romantic, high detail, cinematic lighting, photorealistic, 4k`,
+                    },
+                ],
+            },
             config: {
-              numberOfImages: 1,
-              outputMimeType: 'image/jpeg',
-              aspectRatio: '4:3',
+                imageConfig: {
+                    aspectRatio: "4:3",
+                },
             },
         });
-
-        const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
-        return `data:image/jpeg;base64,${base64ImageBytes}`;
+        
+        const candidates = response.candidates;
+        if (candidates && candidates.length > 0 && candidates[0].content && candidates[0].content.parts) {
+            for (const part of candidates[0].content.parts) {
+                if (part.inlineData) {
+                    const base64EncodeString: string = part.inlineData.data;
+                    return `data:image/png;base64,${base64EncodeString}`;
+                }
+            }
+        }
+        
+        const keywords = prompt.split(',')[0].trim().replace(/\s+/g, '-');
+        return `https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80&sig=${encodeURIComponent(keywords)}`;
     } catch (error) {
         console.error("Error generating image:", error);
-        // Return a placeholder or empty string on failure
-        return "";
+        return `https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80&sig=error`;
     }
 };

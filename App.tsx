@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AppPhase, HoneymoonPreferences, Phase1Response, DetailedItinerary, DestinationRecommendation } from './types';
 import { getRecommendations, getItinerary, generateImage } from './services/geminiService';
 import { translations } from './constants';
@@ -11,15 +12,66 @@ import LoadingIndicator from './components/LoadingIndicator';
 import Header from './components/layout/Header';
 import ErrorDisplay from './components/common/ErrorDisplay';
 
+const safeJSONParse = (val: string | null, fallback: any) => {
+    if (!val || val === "undefined" || val === "null") return fallback;
+    try {
+        return JSON.parse(val);
+    } catch (e) {
+        console.error("Failed to parse localStorage value:", val, e);
+        return fallback;
+    }
+};
+
+const safeLocalStorageSet = (key: string, value: string) => {
+    try {
+        localStorage.setItem(key, value);
+    } catch (e) {
+        if (e instanceof Error && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED')) {
+            console.warn("LocalStorage quota exceeded. Some data was not saved.", key);
+            // If it's a large piece of data like the itinerary, we might want to alert the user or just ignore
+        } else {
+            console.error("Failed to set localStorage value:", key, e);
+        }
+    }
+};
+
 const App: React.FC = () => {
-    const [language, setLanguage] = useState<'en' | 'ar'>('en');
+    const [language, setLanguage] = useState<'en' | 'ar'>(() => {
+        const saved = localStorage.getItem('hp_language');
+        return (saved === 'en' || saved === 'ar') ? saved : 'en';
+    });
     const [phase, setPhase] = useState<AppPhase>(AppPhase.DISCOVERY);
-    const [preferences, setPreferences] = useState<HoneymoonPreferences | null>(null);
-    const [recommendations, setRecommendations] = useState<Phase1Response | null>(null);
+    const [preferences, setPreferences] = useState<HoneymoonPreferences | null>(() => {
+        return safeJSONParse(localStorage.getItem('hp_preferences'), null);
+    });
+    const [recommendations, setRecommendations] = useState<Phase1Response | null>(() => {
+        return safeJSONParse(localStorage.getItem('hp_recommendations'), null);
+    });
     const [recommendationImages, setRecommendationImages] = useState<Record<string, string>>({});
-    const [itinerary, setItinerary] = useState<DetailedItinerary | null>(null);
+    const [itinerary, setItinerary] = useState<DetailedItinerary | null>(() => {
+        return safeJSONParse(localStorage.getItem('hp_itinerary'), null);
+    });
     const [error, setError] = useState<string | null>(null);
-    const [selectedDestination, setSelectedDestination] = useState<string>('');
+    const [selectedDestination, setSelectedDestination] = useState<string>(() => {
+        return localStorage.getItem('hp_selected_destination') || '';
+    });
+
+    useEffect(() => {
+        const savedPhase = localStorage.getItem('hp_phase');
+        if (savedPhase && savedPhase !== AppPhase.ERROR.toString()) {
+            setPhase(Number(savedPhase) as AppPhase);
+        }
+    }, []);
+
+    useEffect(() => {
+        safeLocalStorageSet('hp_language', language);
+        safeLocalStorageSet('hp_preferences', JSON.stringify(preferences));
+        safeLocalStorageSet('hp_recommendations', JSON.stringify(recommendations));
+        // We avoid saving recommendationImages to localStorage because base64 images consume too much space (QuotaExceededError)
+        safeLocalStorageSet('hp_itinerary', JSON.stringify(itinerary));
+        safeLocalStorageSet('hp_phase', phase.toString());
+        safeLocalStorageSet('hp_selected_destination', selectedDestination);
+    }, [language, preferences, recommendations, itinerary, phase, selectedDestination]);
 
     const t = useCallback((key: string, replacements?: { [key: string]: string }): string => {
         const langDict = translations[language];
@@ -71,18 +123,22 @@ const App: React.FC = () => {
 
                         // Update meta tags for social sharing
                         const updateSocials = async () => {
-                            const title = `Our Honeymoon to ${data.itinerary.destination}!`;
-                            const description = `An unforgettable ${data.preferences.duration}-day romantic adventure in ${data.itinerary.destination}. Check out our AI-generated plan!`;
-                            
-                            updateMetaTag('og:title', title);
-                            updateMetaTag('twitter:title', title);
-                            updateMetaTag('og:description', description);
-                            updateMetaTag('twitter:description', description);
+                            try {
+                                const title = `Our Honeymoon to ${data.itinerary.destination}!`;
+                                const description = `An unforgettable ${data.preferences.duration}-day romantic adventure in ${data.itinerary.destination}. Check out our AI-generated plan!`;
+                                
+                                updateMetaTag('og:title', title);
+                                updateMetaTag('twitter:title', title);
+                                updateMetaTag('og:description', description);
+                                updateMetaTag('twitter:description', description);
 
-                            const imageUrl = await generateImage(`A stunning, romantic, photorealistic travel poster of ${data.itinerary.destination}.`);
-                            if(imageUrl) {
-                                updateMetaTag('og:image', imageUrl);
-                                updateMetaTag('twitter:image', imageUrl);
+                                const imageUrl = await generateImage(`A stunning, romantic, photorealistic travel poster of ${data.itinerary.destination}.`);
+                                if(imageUrl) {
+                                    updateMetaTag('og:image', imageUrl);
+                                    updateMetaTag('twitter:image', imageUrl);
+                                }
+                            } catch (error) {
+                                console.error("Error updating social meta tags:", error);
                             }
                         };
                         updateSocials();
@@ -170,21 +226,21 @@ const App: React.FC = () => {
         const props = { t, language };
         switch (phase) {
             case AppPhase.DISCOVERY:
-                return <DiscoveryForm onStartPlanning={handleStartPlanning} isLoading={isLoading} {...props} />;
+                return <DiscoveryForm key="discovery" onStartPlanning={handleStartPlanning} isLoading={isLoading} {...props} />;
             case AppPhase.RECOMMENDING:
-                return <LoadingIndicator text={t('loadingDestinations')} />;
+                return <LoadingIndicator key="loading-recs" text={t('loadingDestinations')} />;
             case AppPhase.RECOMMENDATIONS_READY:
-                return recommendations && <Recommendations response={recommendations} images={recommendationImages} onSelect={handleSelectDestination} onRestart={handleRestart} isLoading={isLoading} {...props} />;
+                return recommendations && preferences && <Recommendations key="recommendations" response={recommendations} preferences={preferences} images={recommendationImages} onSelect={handleSelectDestination} onRestart={handleRestart} isLoading={isLoading} {...props} />;
             case AppPhase.PLANNING:
                 const loadingSteps: string[] = translations[language].loadingItinerarySteps || translations.en.loadingItinerarySteps;
                 const processedSteps = loadingSteps.map(step => step.replace('{destination}', selectedDestination));
-                return <LoadingIndicator text={processedSteps} />;
+                return <LoadingIndicator key="loading-itinerary" text={processedSteps} />;
             case AppPhase.ITINERARY_READY:
-                return itinerary && preferences && <Itinerary itinerary={itinerary} preferences={preferences} onBack={handleBackToRecommendations} onRestart={handleRestart} {...props} />;
+                return itinerary && preferences && <Itinerary key="itinerary" itinerary={itinerary} preferences={preferences} onBack={handleBackToRecommendations} onRestart={handleRestart} {...props} />;
             case AppPhase.ERROR:
-                return error && <ErrorDisplay message={error} onRetry={handleRestart} t={t} />;
+                return error && <ErrorDisplay key="error" message={error} onRetry={handleRestart} t={t} />;
             default:
-                return <DiscoveryForm onStartPlanning={handleStartPlanning} isLoading={isLoading} {...props} />;
+                return <DiscoveryForm key="default" onStartPlanning={handleStartPlanning} isLoading={isLoading} {...props} />;
         }
     };
 
@@ -193,7 +249,17 @@ const App: React.FC = () => {
             <Header t={t} language={language} setLanguage={setLanguage} />
             <main>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-                    {renderContent()}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={phase}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            {renderContent()}
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </main>
              <footer className="text-center py-8 text-sm text-[var(--brand-text-subtle)]">

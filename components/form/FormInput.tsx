@@ -17,13 +17,13 @@ interface FormInputProps {
 const FormInput: React.FC<FormInputProps> = ({ 
     label, name, value, onChange, type = "text", placeholder, fullWidth, required, isTextArea, rows, min
 }) => {
-    const commonClasses = "appearance-none w-full px-3 py-2.5 border border-[var(--brand-border-soft)] rounded-lg shadow-sm focus:ring-2 focus:ring-[var(--brand-rose-300)] focus:border-[var(--brand-rose-500)] transition";
+    const commonClasses = "w-full px-5 py-4 bg-brand-rose-50/50 border border-brand-rose-200 rounded-sm focus:ring-1 focus:ring-brand-rose-400 focus:border-brand-rose-400 outline-none transition-all duration-300 text-brand-text-heading placeholder-brand-text-subtle/40 font-medium";
 
     return (
     <div className={fullWidth ? "md:col-span-2" : isTextArea ? "md:col-span-1" : ""}>
-        <label htmlFor={name} className="block text-sm font-medium text-[var(--brand-text-main)] mb-1.5">
+        <label htmlFor={name} className="block text-[10px] font-bold uppercase tracking-widest text-brand-text-subtle/80 mb-3 ml-1">
             {label}
-            {required && <span className="text-red-500">*</span>}
+            {required && <span className="text-brand-rose-500">*</span>}
         </label>
         {isTextArea ? (
              <textarea 

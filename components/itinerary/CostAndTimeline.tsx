@@ -8,40 +8,58 @@ import SparkleIcon from '../icons/SparkleIcon';
 
 const CostAndTimeline: React.FC<{ breakdown: DetailedCostBreakdown; timeline: VisualTimelineEntry[]; t: (key: string, replacements?: { [key: string]: string }) => string }> = ({ breakdown, timeline, t }) => {
     return (
-        <div className="card-style p-6">
+        <div className="bg-white p-8 rounded-[2rem] shadow-card border border-black/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-rose-50 rounded-full -mr-16 -mt-16 opacity-50 blur-2xl -z-10"></div>
+            
             {/* Timeline */}
-            <h3 className="text-xl font-serif font-bold text-[var(--brand-text-heading)] mb-4 flex items-center">
-                <CalendarIcon className="h-6 w-6 inline-block me-2" />
+            <h3 className="text-2xl font-serif font-black text-brand-text-heading mb-8 tracking-tight flex items-center gap-3">
+                <div className="p-2 bg-brand-rose-50 rounded-lg">
+                    <CalendarIcon className="h-5 w-5 text-brand-rose-500" />
+                </div>
                 {t('visualTimeline')}
             </h3>
-            <div className="mb-6 space-y-2 text-sm">
+            <div className="mb-10 space-y-4">
                 {timeline.map(tItem => (
-                    <div key={tItem.day} className="flex items-center justify-between">
-                        <span className="text-[var(--brand-text-subtle)] flex items-center gap-1.5">
-                            {t('day', {day: tItem.day.toString()})} &mdash; {tItem.title} 
-                            {tItem.isRomantic && <HeartIcon className="h-4 w-4 inline-block text-[var(--brand-rose-500)]" />} 
-                            {tItem.isSpecial && <SparkleIcon />}
-                        </span>
-                        <span className="font-semibold text-[var(--brand-text-main)]">{tItem.cost}</span>
+                    <div key={tItem.day} className="flex items-center justify-between group">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-brand-rose-50 flex items-center justify-center text-[10px] font-black text-brand-rose-600 group-hover:bg-brand-rose-500 group-hover:text-white transition-colors duration-300">
+                                {tItem.day}
+                            </div>
+                            <span className="text-sm font-bold text-brand-text-heading group-hover:text-brand-rose-600 transition-colors duration-300 flex items-center gap-2">
+                                {tItem.title} 
+                                {tItem.isRomantic && <HeartIcon className="h-3 w-3 text-brand-rose-500" />} 
+                                {tItem.isSpecial && <SparkleIcon className="h-3 w-3 text-amber-400" />}
+                            </span>
+                        </div>
+                        <span className="text-xs font-black text-brand-text-subtle/60">{tItem.cost}</span>
                     </div>
                 ))}
             </div>
             
             {/* Cost Breakdown */}
-            <h3 className="text-xl font-serif font-bold text-[var(--brand-text-heading)] mb-4 border-t border-[var(--brand-border-soft)] pt-6 flex items-center">
-                 <MoneyIcon className="h-6 w-6 inline-block me-2" />
+            <h3 className="text-2xl font-serif font-black text-brand-text-heading mb-8 pt-10 border-t border-black/5 tracking-tight flex items-center gap-3">
+                 <div className="p-2 bg-brand-rose-50 rounded-lg">
+                    <MoneyIcon className="h-5 w-5 text-brand-rose-500" />
+                 </div>
                  {t('detailedCost')}
             </h3>
-            <dl className="space-y-2 text-sm">
-                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('flights')}</dt> <dd className="font-semibold">{breakdown.flights}</dd></div>
-                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('accommodation')}</dt> <dd className="font-semibold">{breakdown.accommodation}</dd></div>
-                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('activitiesSubtotal')}</dt> <dd className="font-semibold">{breakdown.activitiesSubtotal}</dd></div>
-                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('dining')}</dt> <dd className="font-semibold">{breakdown.dining}</dd></div>
-                <div className="flex justify-between even:bg-slate-50 -mx-2 px-2 py-1.5 rounded-md"><dt className="text-[var(--brand-text-subtle)]">{t('localTransport')}</dt> <dd className="font-semibold">{breakdown.localTransport}</dd></div>
-                <div className="flex justify-between border-t border-[var(--brand-border-soft)] mt-2 pt-2"><dt className="text-[var(--brand-text-subtle)]">{t('contingency')}</dt> <dd className="font-semibold">{breakdown.contingency}</dd></div>
-                <div className="flex justify-between text-base font-bold text-[var(--brand-text-heading)] border-t-2 border-slate-300 mt-2 pt-2">
-                    <dt>{t('totalEstCost')}</dt> 
-                    <dd>{breakdown.totalCost}</dd>
+            <dl className="space-y-4">
+                {[
+                    { key: 'flights', value: breakdown.flights },
+                    { key: 'accommodation', value: breakdown.accommodation },
+                    { key: 'activitiesSubtotal', value: breakdown.activitiesSubtotal },
+                    { key: 'dining', value: breakdown.dining },
+                    { key: 'localTransport', value: breakdown.localTransport },
+                    { key: 'contingency', value: breakdown.contingency }
+                ].map((item, i) => (
+                    <div key={item.key} className="flex justify-between items-end border-b border-black/5 pb-3 last:border-b-0">
+                        <dt className="text-[10px] font-black uppercase tracking-widest text-brand-text-subtle/60">{t(item.key)}</dt>
+                        <dd className="font-bold text-brand-text-heading text-sm">{item.value}</dd>
+                    </div>
+                ))}
+                <div className="flex justify-between items-center bg-brand-text-heading -mx-8 px-8 py-6 mt-6">
+                    <dt className="text-xs font-black uppercase tracking-[0.2em] text-white/60">{t('totalEstCost')}</dt> 
+                    <dd className="font-serif font-black text-2xl text-white">{breakdown.totalCost}</dd>
                 </div>
             </dl>
         </div>

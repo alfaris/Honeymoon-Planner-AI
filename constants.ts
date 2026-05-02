@@ -122,6 +122,12 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
         noResultsDesc: "We couldn't find any matching destinations for your preferences. Please try adjusting your criteria.",
         startOver: "Start Over",
         orStartOver: "Or, start over with new preferences",
+        perfectMatch: "Perfect Match",
+        expertTip: "Expert Insight",
+        expertTipText: "This itinerary is optimized for a balance of relaxation and authentic local discovery. Don't forget to book your preferred dinner spots at least 2 weeks in advance.",
+        days: "Days",
+        region: "Region",
+        anywhere: "Anywhere",
 
         // Itinerary
         itineraryTitle: "Your Honeymoon to {destination}",
@@ -335,6 +341,12 @@ export const translations: { en: TranslationSet, ar: TranslationSet } = {
         noResultsDesc: "لم نتمكن من العثور على أي وجهات مطابقة لتفضيلاتك. يرجى محاولة تعديل معاييرك.",
         startOver: "ابدأ من جديد",
         orStartOver: "أو، ابدأ من جديد بتفضيلات جديدة",
+        perfectMatch: "تطابق مثالي",
+        expertTip: "نصيحة خبير",
+        expertTipText: "تم تحسين مسار الرحلة هذا لتحقيق توازن بين الاسترخاء والاكتشاف المحلي الأصيل. لا تنس حجز أماكن العشاء المفضلة لديك قبل أسبوعين على الأقل.",
+        days: "أيام",
+        region: "المنطقة",
+        anywhere: "أي مكان",
 
         // Itinerary
         itineraryTitle: "شهر العسل الخاص بك إلى {destination}",
